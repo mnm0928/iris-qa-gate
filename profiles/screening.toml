@@ -1,0 +1,76 @@
+[dataset]
+name = "screening"
+description = "Derived site-screening layer: eligible area and indicative eco-points per candidate site."
+staging_table = "staging.screening"
+curated_table = "curated.screening"
+key = "site_id"
+depends_on = ["parcels", "substations"]
+countries = ["DE"]
+regions = ["DE-NI"]
+
+[geometry]
+srid = 25832
+types = ["POLYGON", "MULTIPOLYGON"]
+
+[[checks]]
+type = "required_fields"
+fields = ["site_id", "country_code", "region_code", "parcel_id", "suitability",
+          "eligible_area_m2", "eco_point_factor", "eco_points_estimate", "source_date", "geom"]
+
+[[checks]]
+type = "optional_fields"
+fields = ["nearest_substation_id"]
+
+[[checks]]
+type = "key_uniqueness"
+on_duplicate = "quarantine"
+max_quarantine_ratio = 0.25
+
+[[checks]]
+type = "geometry"
+
+[[checks]]
+type = "country_scope"
+
+[[checks]]
+type = "duplicate_rows"
+columns = ["country_code", "parcel_id", "geom"]
+
+[[checks]]
+id = "parcel_reference"
+type = "reference_integrity"
+column = "parcel_id"
+ref_table = "curated.parcels"
+ref_key = "parcel_id"
+
+[[checks]]
+id = "substation_reference"
+type = "reference_integrity"
+column = "nearest_substation_id"
+ref_table = "curated.substations"
+ref_key = "substation_id"
+
+[[checks]]
+id = "eligible_area_within_site"
+type = "declared_area"
+column = "eligible_area_m2"
+mode = "at_most"
+rel_tolerance = 0.001
+
+[[checks]]
+id = "eco_points_arithmetic"
+type = "product_consistency"
+result = "eco_points_estimate"
+factors = ["eligible_area_m2", "eco_point_factor"]
+abs_tolerance = 0.5
+expected = { eco_point_factor = 8 }
+
+[[checks]]
+id = "suitability_domain"
+type = "domain"
+column = "suitability"
+allowed = ["high", "medium", "low", "excluded"]
+
+[[checks]]
+type = "source_date"
+max_age_days = 180

@@ -1,0 +1,299 @@
+{
+  "run_id": "10f05ae7-82cc-4ab5-aa2b-133f4f93cd0e",
+  "dataset": "screening",
+  "profile": {
+    "name": "screening",
+    "sha256": "143f2e34e5aa91b90da2f857aba89e4fc3b1a4ebaec673f3d5bdf32e90a7efbd"
+  },
+  "as_of": "2026-09-30",
+  "started_at": "2026-09-30T14:32:02.302124+00:00",
+  "finished_at": "2026-09-30T14:32:02.317354+00:00",
+  "row_count": 11,
+  "dataset_fingerprint": "90e27784d0b597197a799676857a63cf",
+  "decision": "WARN",
+  "promotable": true,
+  "promoted": true,
+  "outcome_counts": {
+    "PASS": 10,
+    "WARN": 2,
+    "BLOCK": 0
+  },
+  "blocking_checks": [],
+  "warning_checks": [
+    "optional_fields",
+    "key_uniqueness"
+  ],
+  "quarantined_rows": [
+    {
+      "country_code": "DE",
+      "key": "SC-010",
+      "reason": "duplicate_key"
+    }
+  ],
+  "checks": [
+    {
+      "check_id": "required_fields",
+      "check_type": "required_fields",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "fields": [
+          "site_id",
+          "country_code",
+          "region_code",
+          "parcel_id",
+          "suitability",
+          "eligible_area_m2",
+          "eco_point_factor",
+          "eco_points_estimate",
+          "source_date",
+          "geom"
+        ],
+        "rows_checked": 11
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "optional_fields",
+      "check_type": "optional_fields",
+      "implementation": "python",
+      "outcome": "WARN",
+      "message": "warn: nearest_substation_id unknown on 1/11 rows (kept NULL, not imputed)",
+      "violation_count": 1,
+      "issue_counts": {
+        "missing_optional_value": 1
+      },
+      "evidence": [
+        {
+          "issue": "missing_optional_value",
+          "severity": "WARN",
+          "country_code": "DE",
+          "key": "SC-004",
+          "field": "nearest_substation_id",
+          "value": "unknown"
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "rows_checked": 11,
+        "coverage": {
+          "nearest_substation_id": {
+            "unknown": 1,
+            "known": 10,
+            "unknown_ratio": 0.0909
+          }
+        },
+        "imputation": "none"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "key_uniqueness",
+      "check_type": "key_uniqueness",
+      "implementation": "sql",
+      "outcome": "WARN",
+      "message": "warn: 1 duplicate_key_quarantined",
+      "violation_count": 1,
+      "issue_counts": {
+        "duplicate_key_quarantined": 1
+      },
+      "evidence": [
+        {
+          "issue": "duplicate_key_quarantined",
+          "severity": "WARN",
+          "country_code": "DE",
+          "key": "SC-010",
+          "rows": 2
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "rows_checked": 11,
+        "duplicated_rows": 2,
+        "policy": "quarantine"
+      },
+      "quarantine": [
+        {
+          "country_code": "DE",
+          "key": "SC-010",
+          "reason": "duplicate_key"
+        }
+      ]
+    },
+    {
+      "check_id": "geometry",
+      "check_type": "geometry",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "srid": 25832,
+        "allowed_types": [
+          "POLYGON",
+          "MULTIPOLYGON"
+        ]
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "country_scope",
+      "check_type": "country_scope",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "countries": [
+          "DE"
+        ],
+        "regions": [
+          "DE-NI"
+        ],
+        "containment_not_evaluated": 0
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "duplicate_rows",
+      "check_type": "duplicate_rows",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "compared_columns": [
+          "country_code",
+          "parcel_id",
+          "geom"
+        ],
+        "snap_grid_m": 0.01
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "parcel_reference",
+      "check_type": "reference_integrity",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "ref_table": "curated.parcels",
+        "scoped_by": "country_code"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "substation_reference",
+      "check_type": "reference_integrity",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "ref_table": "curated.substations",
+        "scoped_by": "country_code"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "eligible_area_within_site",
+      "check_type": "declared_area",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "column": "eligible_area_m2",
+        "mode": "at_most",
+        "rel_tolerance": 0.001,
+        "not_evaluated_bad_geometry": 0
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "eco_points_arithmetic",
+      "check_type": "product_consistency",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "formula": "eco_points_estimate = eligible_area_m2 * eco_point_factor",
+        "abs_tolerance": 0.5,
+        "expected": {
+          "eco_point_factor": 8
+        }
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "suitability_domain",
+      "check_type": "domain",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "column": "suitability",
+        "allowed": [
+          "high",
+          "medium",
+          "low",
+          "excluded"
+        ],
+        "min": null,
+        "max": null
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "source_date",
+      "check_type": "source_date",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "as_of": "2026-09-30",
+        "max_age_days": 180,
+        "oldest": "2026-08-15",
+        "newest": "2026-08-15"
+      },
+      "quarantine": []
+    }
+  ]
+}

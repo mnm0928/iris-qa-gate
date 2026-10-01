@@ -1,0 +1,189 @@
+{
+  "run_id": "fb956589-4937-472a-8f07-08c324540630",
+  "dataset": "substations",
+  "profile": {
+    "name": "substations",
+    "sha256": "31a9ce6576cb9f6ba07c3f6fc72b1e3208b4b5ec79dde6c210dbe35dcec8de01"
+  },
+  "as_of": "2026-09-30",
+  "started_at": "2026-09-30T14:32:02.282969+00:00",
+  "finished_at": "2026-09-30T14:32:02.296204+00:00",
+  "row_count": 4,
+  "dataset_fingerprint": "1610cab6d5e3e706cb979fc983590179",
+  "decision": "PASS",
+  "promotable": true,
+  "promoted": true,
+  "outcome_counts": {
+    "PASS": 8,
+    "WARN": 0,
+    "BLOCK": 0
+  },
+  "blocking_checks": [],
+  "warning_checks": [],
+  "quarantined_rows": [],
+  "checks": [
+    {
+      "check_id": "required_fields",
+      "check_type": "required_fields",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "fields": [
+          "substation_id",
+          "country_code",
+          "region_code",
+          "name",
+          "voltage_kv",
+          "source_date",
+          "geom"
+        ],
+        "rows_checked": 4
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "optional_fields",
+      "check_type": "optional_fields",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "rows_checked": 4,
+        "coverage": {
+          "operator": {
+            "unknown": 0,
+            "known": 4,
+            "unknown_ratio": 0.0
+          },
+          "capacity_mva": {
+            "unknown": 0,
+            "known": 4,
+            "unknown_ratio": 0.0
+          }
+        },
+        "imputation": "none"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "key_uniqueness",
+      "check_type": "key_uniqueness",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "rows_checked": 4,
+        "duplicated_rows": 0,
+        "policy": "block"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "geometry",
+      "check_type": "geometry",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "srid": 25832,
+        "allowed_types": [
+          "POINT"
+        ]
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "country_scope",
+      "check_type": "country_scope",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "countries": [
+          "DE"
+        ],
+        "regions": [
+          "DE-NI"
+        ],
+        "containment_not_evaluated": 0
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "duplicate_rows",
+      "check_type": "duplicate_rows",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "compared_columns": [
+          "country_code",
+          "geom"
+        ],
+        "snap_grid_m": 1.0
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "voltage_range",
+      "check_type": "domain",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "column": "voltage_kv",
+        "allowed": null,
+        "min": 1,
+        "max": 1000
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "source_date",
+      "check_type": "source_date",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "as_of": "2026-09-30",
+        "max_age_days": 365,
+        "oldest": "2026-03-01",
+        "newest": "2026-03-01"
+      },
+      "quarantine": []
+    }
+  ]
+}

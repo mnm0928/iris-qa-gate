@@ -1,0 +1,289 @@
+{
+  "run_id": "806bc1c1-06b1-4ec1-b953-beed9a8d5bbc",
+  "dataset": "substations",
+  "profile": {
+    "name": "substations",
+    "sha256": "31a9ce6576cb9f6ba07c3f6fc72b1e3208b4b5ec79dde6c210dbe35dcec8de01"
+  },
+  "as_of": "2026-09-30",
+  "started_at": "2026-09-30T14:32:02.919641+00:00",
+  "finished_at": "2026-09-30T14:32:02.933503+00:00",
+  "row_count": 6,
+  "dataset_fingerprint": "a25acb0283ad332c114c065c4b187779",
+  "decision": "BLOCK",
+  "promotable": false,
+  "promoted": false,
+  "outcome_counts": {
+    "PASS": 1,
+    "WARN": 2,
+    "BLOCK": 5
+  },
+  "blocking_checks": [
+    "required_fields",
+    "geometry",
+    "country_scope",
+    "duplicate_rows",
+    "voltage_range"
+  ],
+  "warning_checks": [
+    "optional_fields",
+    "source_date"
+  ],
+  "quarantined_rows": [],
+  "checks": [
+    {
+      "check_id": "required_fields",
+      "check_type": "required_fields",
+      "implementation": "python",
+      "outcome": "BLOCK",
+      "message": "block: 1 missing_required_value",
+      "violation_count": 1,
+      "issue_counts": {
+        "missing_required_value": 1
+      },
+      "evidence": [
+        {
+          "issue": "missing_required_value",
+          "severity": "BLOCK",
+          "country_code": null,
+          "key": "S-12",
+          "field": "country_code"
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "fields": [
+          "substation_id",
+          "country_code",
+          "region_code",
+          "name",
+          "voltage_kv",
+          "source_date",
+          "geom"
+        ],
+        "rows_checked": 6
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "optional_fields",
+      "check_type": "optional_fields",
+      "implementation": "python",
+      "outcome": "WARN",
+      "message": "warn: operator unknown on 1/6 rows; capacity_mva unknown on 1/6 rows (kept NULL, not imputed)",
+      "violation_count": 2,
+      "issue_counts": {
+        "missing_optional_value": 2
+      },
+      "evidence": [
+        {
+          "issue": "missing_optional_value",
+          "severity": "WARN",
+          "country_code": null,
+          "key": "S-12",
+          "field": "operator",
+          "value": "unknown"
+        },
+        {
+          "issue": "missing_optional_value",
+          "severity": "WARN",
+          "country_code": null,
+          "key": "S-12",
+          "field": "capacity_mva",
+          "value": "unknown"
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "rows_checked": 6,
+        "coverage": {
+          "operator": {
+            "unknown": 1,
+            "known": 5,
+            "unknown_ratio": 0.1667
+          },
+          "capacity_mva": {
+            "unknown": 1,
+            "known": 5,
+            "unknown_ratio": 0.1667
+          }
+        },
+        "imputation": "none"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "key_uniqueness",
+      "check_type": "key_uniqueness",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "rows_checked": 6,
+        "duplicated_rows": 0,
+        "policy": "block"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "geometry",
+      "check_type": "geometry",
+      "implementation": "sql",
+      "outcome": "BLOCK",
+      "message": "block: 1 wrong_geometry_type",
+      "violation_count": 1,
+      "issue_counts": {
+        "wrong_geometry_type": 1
+      },
+      "evidence": [
+        {
+          "issue": "wrong_geometry_type",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "S-16",
+          "geometry_type": "POLYGON",
+          "expected": [
+            "POINT"
+          ]
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "srid": 25832,
+        "allowed_types": [
+          "POINT"
+        ]
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "country_scope",
+      "check_type": "country_scope",
+      "implementation": "sql",
+      "outcome": "BLOCK",
+      "message": "block: 1 missing_country_code",
+      "violation_count": 1,
+      "issue_counts": {
+        "missing_country_code": 1
+      },
+      "evidence": [
+        {
+          "issue": "missing_country_code",
+          "severity": "BLOCK",
+          "country_code": null,
+          "key": "S-12",
+          "region_code": "DE-NI"
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "countries": [
+          "DE"
+        ],
+        "regions": [
+          "DE-NI"
+        ],
+        "containment_not_evaluated": 0
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "duplicate_rows",
+      "check_type": "duplicate_rows",
+      "implementation": "sql",
+      "outcome": "BLOCK",
+      "message": "block: 1 duplicate_record",
+      "violation_count": 1,
+      "issue_counts": {
+        "duplicate_record": 1
+      },
+      "evidence": [
+        {
+          "issue": "duplicate_record",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "S-11",
+          "duplicate_keys": [
+            "S-11",
+            "S-13"
+          ],
+          "rows": 2
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "compared_columns": [
+          "country_code",
+          "geom"
+        ],
+        "snap_grid_m": 1.0
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "voltage_range",
+      "check_type": "domain",
+      "implementation": "python",
+      "outcome": "BLOCK",
+      "message": "block: 1 value_out_of_range",
+      "violation_count": 1,
+      "issue_counts": {
+        "value_out_of_range": 1
+      },
+      "evidence": [
+        {
+          "issue": "value_out_of_range",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "S-14",
+          "column": "voltage_kv",
+          "value": 5000.0,
+          "min": 1,
+          "max": 1000
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "column": "voltage_kv",
+        "allowed": null,
+        "min": 1,
+        "max": 1000
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "source_date",
+      "check_type": "source_date",
+      "implementation": "python",
+      "outcome": "WARN",
+      "message": "warn: 1 stale_source_date",
+      "violation_count": 1,
+      "issue_counts": {
+        "stale_source_date": 1
+      },
+      "evidence": [
+        {
+          "issue": "stale_source_date",
+          "severity": "WARN",
+          "country_code": "DE",
+          "key": "S-15",
+          "value": "2023-02-01",
+          "age_days": 1337,
+          "max_age_days": 365
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "as_of": "2026-09-30",
+        "max_age_days": 365,
+        "oldest": "2023-02-01",
+        "newest": "2026-03-01"
+      },
+      "quarantine": []
+    }
+  ]
+}

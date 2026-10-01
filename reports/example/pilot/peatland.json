@@ -1,0 +1,232 @@
+{
+  "run_id": "71f9777a-d85e-4984-9ec5-c584da0df292",
+  "dataset": "peatland",
+  "profile": {
+    "name": "peatland",
+    "sha256": "793939eb9e6426a0e18b9bc688652d0be93e8a466ce318c3846642139286b780"
+  },
+  "as_of": "2026-09-30",
+  "started_at": "2026-09-30T14:32:02.261641+00:00",
+  "finished_at": "2026-09-30T14:32:02.276609+00:00",
+  "row_count": 4,
+  "dataset_fingerprint": "2a0783e08130038656715747fab3ef8f",
+  "decision": "WARN",
+  "promotable": true,
+  "promoted": true,
+  "outcome_counts": {
+    "PASS": 8,
+    "WARN": 1,
+    "BLOCK": 0
+  },
+  "blocking_checks": [],
+  "warning_checks": [
+    "optional_fields"
+  ],
+  "quarantined_rows": [],
+  "checks": [
+    {
+      "check_id": "required_fields",
+      "check_type": "required_fields",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "fields": [
+          "peat_id",
+          "country_code",
+          "region_code",
+          "peat_class",
+          "source_date",
+          "geom"
+        ],
+        "rows_checked": 4
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "optional_fields",
+      "check_type": "optional_fields",
+      "implementation": "python",
+      "outcome": "WARN",
+      "message": "warn: peat_depth_cm unknown on 1/4 rows; soil_organic_carbon_pct unknown on 1/4 rows (kept NULL, not imputed)",
+      "violation_count": 2,
+      "issue_counts": {
+        "missing_optional_value": 2
+      },
+      "evidence": [
+        {
+          "issue": "missing_optional_value",
+          "severity": "WARN",
+          "country_code": "DE",
+          "key": "PT-02",
+          "field": "soil_organic_carbon_pct",
+          "value": "unknown"
+        },
+        {
+          "issue": "missing_optional_value",
+          "severity": "WARN",
+          "country_code": "DE",
+          "key": "PT-03",
+          "field": "peat_depth_cm",
+          "value": "unknown"
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "rows_checked": 4,
+        "coverage": {
+          "peat_depth_cm": {
+            "unknown": 1,
+            "known": 3,
+            "unknown_ratio": 0.25
+          },
+          "soil_organic_carbon_pct": {
+            "unknown": 1,
+            "known": 3,
+            "unknown_ratio": 0.25
+          }
+        },
+        "imputation": "none"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "key_uniqueness",
+      "check_type": "key_uniqueness",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "rows_checked": 4,
+        "duplicated_rows": 0,
+        "policy": "block"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "geometry",
+      "check_type": "geometry",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "srid": 25832,
+        "allowed_types": [
+          "POLYGON",
+          "MULTIPOLYGON"
+        ]
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "country_scope",
+      "check_type": "country_scope",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "countries": [
+          "DE"
+        ],
+        "regions": [
+          "DE-NI"
+        ],
+        "containment_not_evaluated": 0
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "duplicate_rows",
+      "check_type": "duplicate_rows",
+      "implementation": "sql",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "compared_columns": [
+          "country_code",
+          "geom"
+        ],
+        "snap_grid_m": 0.01
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "peat_class_domain",
+      "check_type": "domain",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "column": "peat_class",
+        "allowed": [
+          "bog",
+          "fen",
+          "transitional"
+        ],
+        "min": null,
+        "max": null
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "soil_organic_carbon_range",
+      "check_type": "domain",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "column": "soil_organic_carbon_pct",
+        "allowed": null,
+        "min": 0,
+        "max": 100
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "source_date",
+      "check_type": "source_date",
+      "implementation": "python",
+      "outcome": "PASS",
+      "message": "no violations",
+      "violation_count": 0,
+      "issue_counts": {},
+      "evidence": [],
+      "evidence_truncated": false,
+      "details": {
+        "as_of": "2026-09-30",
+        "max_age_days": 3650,
+        "oldest": "2019-05-01",
+        "newest": "2019-05-01"
+      },
+      "quarantine": []
+    }
+  ]
+}

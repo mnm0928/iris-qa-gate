@@ -1,0 +1,49 @@
+[dataset]
+name = "parcels"
+description = "Cadastral parcels: the unit every eco-point estimate is computed on."
+staging_table = "staging.parcels"
+curated_table = "curated.parcels"
+key = "parcel_id"
+countries = ["DE"]
+regions = ["DE-NI"]
+
+[geometry]
+srid = 25832
+types = ["POLYGON", "MULTIPOLYGON"]
+
+[[checks]]
+type = "required_fields"
+fields = ["parcel_id", "country_code", "region_code", "municipality", "land_use", "area_m2", "source_date", "geom"]
+
+[[checks]]
+type = "optional_fields"
+fields = ["soil_type"]
+
+[[checks]]
+type = "key_uniqueness"
+on_duplicate = "block"
+
+[[checks]]
+type = "geometry"
+
+[[checks]]
+type = "country_scope"
+
+[[checks]]
+type = "duplicate_rows"
+columns = ["country_code", "geom"]
+
+[[checks]]
+type = "declared_area"
+column = "area_m2"
+rel_tolerance = 0.01
+
+[[checks]]
+type = "source_date"
+max_age_days = 1095
+
+[[checks]]
+id = "land_use_domain"
+type = "domain"
+column = "land_use"
+allowed = ["arable", "grassland", "forest", "wetland", "fallow"]

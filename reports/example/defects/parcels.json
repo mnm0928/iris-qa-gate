@@ -1,0 +1,383 @@
+{
+  "run_id": "91b04f13-3ba5-41ae-9f15-1620bc03103c",
+  "dataset": "parcels",
+  "profile": {
+    "name": "parcels",
+    "sha256": "144fbfc2c61494a060f8adbef6d0ca23326f3c39d5a23dc360ab704e2e35e8d5"
+  },
+  "as_of": "2026-09-30",
+  "started_at": "2026-09-30T14:32:02.760670+00:00",
+  "finished_at": "2026-09-30T14:32:02.878775+00:00",
+  "row_count": 15,
+  "dataset_fingerprint": "ce026549735923a0e111560a45d93bf2",
+  "decision": "BLOCK",
+  "promotable": false,
+  "promoted": false,
+  "outcome_counts": {
+    "PASS": 0,
+    "WARN": 1,
+    "BLOCK": 8
+  },
+  "blocking_checks": [
+    "required_fields",
+    "key_uniqueness",
+    "geometry",
+    "country_scope",
+    "duplicate_rows",
+    "declared_area",
+    "source_date",
+    "land_use_domain"
+  ],
+  "warning_checks": [
+    "optional_fields"
+  ],
+  "quarantined_rows": [],
+  "checks": [
+    {
+      "check_id": "required_fields",
+      "check_type": "required_fields",
+      "implementation": "python",
+      "outcome": "BLOCK",
+      "message": "block: 1 missing_required_value",
+      "violation_count": 1,
+      "issue_counts": {
+        "missing_required_value": 1
+      },
+      "evidence": [
+        {
+          "issue": "missing_required_value",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-110",
+          "field": "municipality"
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "fields": [
+          "parcel_id",
+          "country_code",
+          "region_code",
+          "municipality",
+          "land_use",
+          "area_m2",
+          "source_date",
+          "geom"
+        ],
+        "rows_checked": 15
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "optional_fields",
+      "check_type": "optional_fields",
+      "implementation": "python",
+      "outcome": "WARN",
+      "message": "warn: soil_type unknown on 2/15 rows (kept NULL, not imputed)",
+      "violation_count": 2,
+      "issue_counts": {
+        "missing_optional_value": 2
+      },
+      "evidence": [
+        {
+          "issue": "missing_optional_value",
+          "severity": "WARN",
+          "country_code": "DE",
+          "key": "P-103",
+          "field": "soil_type",
+          "value": "unknown"
+        },
+        {
+          "issue": "missing_optional_value",
+          "severity": "WARN",
+          "country_code": "DE",
+          "key": "P-114",
+          "field": "soil_type",
+          "value": "unknown"
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "rows_checked": 15,
+        "coverage": {
+          "soil_type": {
+            "unknown": 2,
+            "known": 13,
+            "unknown_ratio": 0.1333
+          }
+        },
+        "imputation": "none"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "key_uniqueness",
+      "check_type": "key_uniqueness",
+      "implementation": "sql",
+      "outcome": "BLOCK",
+      "message": "block: 1 duplicate_key",
+      "violation_count": 1,
+      "issue_counts": {
+        "duplicate_key": 1
+      },
+      "evidence": [
+        {
+          "issue": "duplicate_key",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-104",
+          "rows": 2
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "rows_checked": 15,
+        "duplicated_rows": 2,
+        "policy": "block"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "geometry",
+      "check_type": "geometry",
+      "implementation": "sql",
+      "outcome": "BLOCK",
+      "message": "block: 1 invalid_geometry, 1 wrong_geometry_type, 1 wrong_srid",
+      "violation_count": 3,
+      "issue_counts": {
+        "invalid_geometry": 1,
+        "wrong_geometry_type": 1,
+        "wrong_srid": 1
+      },
+      "evidence": [
+        {
+          "issue": "invalid_geometry",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-102",
+          "reason": "Self-intersection[525250 5820050]"
+        },
+        {
+          "issue": "wrong_srid",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-109",
+          "srid": 4326,
+          "expected": 25832
+        },
+        {
+          "issue": "wrong_geometry_type",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-113",
+          "geometry_type": "LINESTRING",
+          "expected": [
+            "POLYGON",
+            "MULTIPOLYGON"
+          ]
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "srid": 25832,
+        "allowed_types": [
+          "POLYGON",
+          "MULTIPOLYGON"
+        ]
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "country_scope",
+      "check_type": "country_scope",
+      "implementation": "sql",
+      "outcome": "BLOCK",
+      "message": "block: 1 country_out_of_scope, 1 geometry_outside_region",
+      "violation_count": 2,
+      "issue_counts": {
+        "country_out_of_scope": 1,
+        "geometry_outside_region": 1
+      },
+      "evidence": [
+        {
+          "issue": "geometry_outside_region",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-107",
+          "region_code": "DE-NI",
+          "distance_to_region_m": 100000.0
+        },
+        {
+          "issue": "country_out_of_scope",
+          "severity": "BLOCK",
+          "country_code": "NL",
+          "key": "P-106",
+          "region_code": "NL-GR"
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "countries": [
+          "DE"
+        ],
+        "regions": [
+          "DE-NI"
+        ],
+        "containment_not_evaluated": 2
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "duplicate_rows",
+      "check_type": "duplicate_rows",
+      "implementation": "sql",
+      "outcome": "BLOCK",
+      "message": "block: 1 duplicate_record",
+      "violation_count": 1,
+      "issue_counts": {
+        "duplicate_record": 1
+      },
+      "evidence": [
+        {
+          "issue": "duplicate_record",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-101",
+          "duplicate_keys": [
+            "P-101",
+            "P-108"
+          ],
+          "rows": 2
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "compared_columns": [
+          "country_code",
+          "geom"
+        ],
+        "snap_grid_m": 0.01
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "declared_area",
+      "check_type": "declared_area",
+      "implementation": "python",
+      "outcome": "BLOCK",
+      "message": "block: 1 area_mismatch",
+      "violation_count": 1,
+      "issue_counts": {
+        "area_mismatch": 1
+      },
+      "evidence": [
+        {
+          "issue": "area_mismatch",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-105",
+          "deviation": 0.25,
+          "declared_m2": 12500.0,
+          "geometry_m2": 10000.0
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "column": "area_m2",
+        "mode": "equal",
+        "rel_tolerance": 0.01,
+        "not_evaluated_bad_geometry": 3
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "source_date",
+      "check_type": "source_date",
+      "implementation": "python",
+      "outcome": "BLOCK",
+      "message": "block: 1 future_source_date, 1 stale_source_date, 1 unparseable_source_date",
+      "violation_count": 3,
+      "issue_counts": {
+        "future_source_date": 1,
+        "stale_source_date": 1,
+        "unparseable_source_date": 1
+      },
+      "evidence": [
+        {
+          "issue": "future_source_date",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-111",
+          "value": "2027-01-01",
+          "as_of": "2026-09-30"
+        },
+        {
+          "issue": "unparseable_source_date",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-112",
+          "value": "2025-13-45"
+        },
+        {
+          "issue": "stale_source_date",
+          "severity": "WARN",
+          "country_code": "DE",
+          "key": "P-114",
+          "value": "2021-01-15",
+          "age_days": 2084,
+          "max_age_days": 1095
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "as_of": "2026-09-30",
+        "max_age_days": 1095,
+        "oldest": "2021-01-15",
+        "newest": "2027-01-01"
+      },
+      "quarantine": []
+    },
+    {
+      "check_id": "land_use_domain",
+      "check_type": "domain",
+      "implementation": "python",
+      "outcome": "BLOCK",
+      "message": "block: 1 value_not_allowed",
+      "violation_count": 1,
+      "issue_counts": {
+        "value_not_allowed": 1
+      },
+      "evidence": [
+        {
+          "issue": "value_not_allowed",
+          "severity": "BLOCK",
+          "country_code": "DE",
+          "key": "P-112",
+          "column": "land_use",
+          "value": "parking",
+          "allowed": [
+            "arable",
+            "grassland",
+            "forest",
+            "wetland",
+            "fallow"
+          ]
+        }
+      ],
+      "evidence_truncated": false,
+      "details": {
+        "column": "land_use",
+        "allowed": [
+          "arable",
+          "grassland",
+          "forest",
+          "wetland",
+          "fallow"
+        ],
+        "min": null,
+        "max": null
+      },
+      "quarantine": []
+    }
+  ]
+}

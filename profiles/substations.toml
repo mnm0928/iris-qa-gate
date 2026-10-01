@@ -1,0 +1,46 @@
+[dataset]
+name = "substations"
+description = "Grid substations used for distance-to-grid screening."
+staging_table = "staging.substations"
+curated_table = "curated.substations"
+key = "substation_id"
+countries = ["DE"]
+regions = ["DE-NI"]
+
+[geometry]
+srid = 25832
+types = ["POINT"]
+
+[[checks]]
+type = "required_fields"
+fields = ["substation_id", "country_code", "region_code", "name", "voltage_kv", "source_date", "geom"]
+
+[[checks]]
+type = "optional_fields"
+fields = ["operator", "capacity_mva"]
+
+[[checks]]
+type = "key_uniqueness"
+on_duplicate = "block"
+
+[[checks]]
+type = "geometry"
+
+[[checks]]
+type = "country_scope"
+
+[[checks]]
+type = "duplicate_rows"
+columns = ["country_code", "geom"]
+snap_grid = 1.0
+
+[[checks]]
+id = "voltage_range"
+type = "domain"
+column = "voltage_kv"
+min = 1
+max = 1000
+
+[[checks]]
+type = "source_date"
+max_age_days = 365

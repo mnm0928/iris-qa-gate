@@ -1,0 +1,5 @@
+substation_id,country_code,region_code,name,operator,voltage_kv,capacity_mva,source_date,geom
+S-01,DE,DE-NI,UW Diepholz Nord,Avacon Netz,110,63,2026-03-01,SRID=25832;POINT(520500 5822000)
+S-02,DE,DE-NI,UW Barnstorf,Avacon Netz,110,40,2026-03-01,SRID=25832;POINT(517000 5820500)
+S-03,DE,DE-NI,UW Wagenfeld,TenneT,380,1200,2026-03-01,SRID=25832;POINT(528000 5816000)
+S-04,DE,DE-NI,UW Lemförde,TenneT,220,600,2026-03-01,SRID=25832;POINT(522500 5811000)
